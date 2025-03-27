@@ -4,7 +4,9 @@ import ServiceManagement
 import os.log
 
 public enum LaunchAtLogin {
+	
 	private static let logger = Logger(subsystem: "com.sindresorhus.LaunchAtLogin", category: "main")
+	
 	fileprivate static let observable = Observable()
 
 	/**
@@ -44,14 +46,16 @@ public enum LaunchAtLogin {
 }
 
 extension LaunchAtLogin {
+	
+	@MainActor
 	final class Observable: ObservableObject {
+		
 		var isEnabled: Bool {
 			get { LaunchAtLogin.isEnabled }
-			set {
-				LaunchAtLogin.isEnabled = newValue
-			}
+			set { LaunchAtLogin.isEnabled = newValue }
 		}
 	}
+	
 }
 
 extension LaunchAtLogin {
@@ -79,7 +83,9 @@ extension LaunchAtLogin {
 	```
 	*/
 	public struct Toggle<Label: View>: View {
+		
 		@ObservedObject private var launchAtLogin = LaunchAtLogin.observable
+		
 		private let label: Label
 
 		/**
