@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
 	name: "LaunchAtLogin",
 	platforms: [
-		.macOS(.v13),
+		.macOS(.v14),
 		.macCatalyst(.v16)
 	],
 	products: [

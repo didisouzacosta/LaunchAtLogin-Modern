@@ -86,6 +86,8 @@ extension LaunchAtLogin {
 		
 		@ObservedObject private var launchAtLogin = LaunchAtLogin.observable
 		
+		public var changedValue: ((Bool) -> Void)?
+		
 		private let label: Label
 
 		/**
@@ -94,12 +96,16 @@ extension LaunchAtLogin {
 		- Parameters:
 			- label: A view that describes the purpose of the toggle.
 		*/
-		public init(@ViewBuilder label: () -> Label) {
+		public init(@ViewBuilder label: () -> Label, changedValue: ((Bool) -> Void)? = nil) {
 			self.label = label()
+			self.changedValue = changedValue
 		}
 
 		public var body: some View {
 			SwiftUI.Toggle(isOn: $launchAtLogin.isEnabled) { label }
+				.onChange(of: $launchAtLogin.isEnabled.wrappedValue) { _, newValue in
+					changedValue?(newValue)
+				}
 		}
 	}
 }
